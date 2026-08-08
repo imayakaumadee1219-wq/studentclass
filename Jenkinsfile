@@ -10,10 +10,13 @@ pipeline {
         }
 
         stage('Build with Maven') {
-            steps {
-                bat 'mvn clean package -DskipTests'
-            }
-        }
+    tools {
+        maven 'Maven1'
+    }
+    steps {
+        bat 'mvn clean package -DskipTests'
+    }
+}
 
         stage('Check Docker') {
             steps {
