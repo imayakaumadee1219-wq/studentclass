@@ -22,7 +22,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    bat 'mvn sonar:sonar -Dsonar.projectKey=studentclass'
+                    bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=studentclass'
                 }
             }
         }
