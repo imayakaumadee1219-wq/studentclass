@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven1'
+    }
+
     stages {
 
         stage('Checkout') {
@@ -10,13 +14,18 @@ pipeline {
         }
 
         stage('Build with Maven') {
-    tools {
-        maven 'Maven1'
-    }
-    steps {
-        bat 'mvn clean package -DskipTests'
-    }
-}
+            steps {
+                bat 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    bat 'mvn sonar:sonar -Dsonar.projectKey=studentclass'
+                }
+            }
+        }
 
         stage('Check Docker') {
             steps {
