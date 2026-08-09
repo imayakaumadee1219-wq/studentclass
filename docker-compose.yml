@@ -22,7 +22,7 @@ services:
     ports:
       - "8300:8300"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/studentclass_new
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/students?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
