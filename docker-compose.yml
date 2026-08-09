@@ -1,33 +1,11 @@
 services:
-
-  mysql:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: studentclass_new
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
   springboot:
     build: .
+    container_name: student-api
     restart: on-failure
     ports:
       - "8300:8300"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/studentclass_new?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-    depends_on:
-      mysql:
-        condition: service_healthy
-
-volumes:
-  mysql_data:
+      SPRING_DATASOURCE_PASSWORD:
